@@ -56,6 +56,4 @@ public class PostRequestTest extends Utility {
         delete(id);
     }
 
-//    EXERCISE5 :  Pass data in all required fields in the body
-
 }

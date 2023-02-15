@@ -7,8 +7,8 @@ import static io.restassured.RestAssured.given;
 
 public class Utility {
     String bearerToken = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9." +
-        "eyJleHAiOiIyMDIzLTAyLTA5VDE1OjM2OjU1LjkyNloiLCJ1c2VybmFtZSI6ImFyeWEuc2luZ2hAM3BpbGxhcmdsb2JhbC5jb20ifQ." +
-        "OuTLg3hSoZGmueAo-L8_dybpAY4hJ9Pp0ODr5gFUUcSTuKcBQPqy-8yJ0o9-ssiyc42-wzIKq3QHeOpOFsRR_g";
+        "eyJleHAiOiIyMDIzLTAyLTE1VDEzOjQzOjUzLjg2MVoiLCJ1c2VybmFtZSI6ImFyeWEuc2luZ2hAM3BpbGxhcmdsb2JhbC5jb20ifQ." +
+        "clieI2UORtfDRXfYJrWGpsFeNjYDdq5icRbiMirO3mkpfFFkNF7P2d7UDfmhUDx0OyYr_MoIsKzpCyYtj8NJDA";
     Response response;
     PostPOJO data = new PostPOJO();
 
@@ -31,19 +31,20 @@ public class Utility {
 
     Response post() {
         String[] assocTag = {"Framework", "Aurelia", "JSFramework"};
+
         data.setName("AureliaJS");
         data.setAssoc_tags(assocTag);
-        data.setDescription("Angular like framework");
+        data.setDescription("Angular like frameworks");
         data.setLogo(6);
         data.setDoc_link("aurelia.com");
         data.setTech_type_id(3);
 
         response = given()
             .contentType("application/json")
-            .headers("Authorization", "Bearer " + bearerToken)
+            .headers("Authorization", "Bearer "+ bearerToken)
             .body(data)
             .when()
-            .post("https://stage-api-engage.3pillarglobal.com/api/technologies")
+            .post("https://stage-api-engage.3pillarglobal.com/api/technologies/")
             .then().contentType(ContentType.JSON).
             extract().response();
         return response;

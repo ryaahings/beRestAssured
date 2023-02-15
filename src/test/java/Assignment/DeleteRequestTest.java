@@ -1,28 +1,23 @@
 package Assignment;
 
 import io.restassured.response.Response;
+import org.testng.Assert;
 import org.testng.annotations.Test;
 
-import static io.restassured.RestAssured.given;
-
 public class DeleteRequestTest extends Utility {
-    //    Scenario1 : Pass the id in the DELETE request 
+    int id;
+    //    Scenario1 : Pass the id in the DELETE request
     @Test
     void deleteRequestWithId() {
         Response response = post();
-        delete(response.jsonPath().get("id"));
+        id = response.jsonPath().get("id");
+        delete(id);
     }
 
-    //    Scenario2 : After deleted id 
-    @Test
+    //    Scenario2 : After deleted id
+    @Test(dependsOnMethods = "deleteRequestWithId")
     void deleteRequestWithoutId() {
-        Response response = post();
-        int id = response.jsonPath().get("id");
-        delete(id);
-        given()
-            .headers("Authorization", "Bearer " + bearerToken)
-            .when()
-            .delete("https://stage-api-engage.3pillarglobal.com/api/technologies/" + id)
-            .then().statusCode(204);
+        response = get(id);
+        Assert.assertEquals(response.getBody().asString(),"Item not found");
     }
 }

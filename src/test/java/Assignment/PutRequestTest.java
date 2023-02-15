@@ -1,16 +1,23 @@
 package Assignment;
 
-import io.restassured.response.Response;
 import org.testng.Assert;
+import org.testng.annotations.AfterMethod;
+import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
 import static io.restassured.RestAssured.given;
 
 public class PutRequestTest extends Utility {
+    int id;
+
+    @BeforeMethod
+    public void setUpMethod() {
+        response = post();
+    }
+
     //    Scenario1 : Pass the data in the body without “name” 
     @Test
     void putWithoutName() {
-        Response response = post();
         PostPOJO data = new PostPOJO();
         String[] assoc_tags = {"tags", "framework"};
 
@@ -20,7 +27,7 @@ public class PutRequestTest extends Utility {
         data.setDoc_link("aruleia.com");
         data.setTech_type_id(4);
 
-        int id = response.jsonPath().get("id");
+        id = response.jsonPath().get("id");
         given()
             .contentType("application/json")
             .headers("Authorization", "Bearer " + bearerToken)
@@ -28,13 +35,11 @@ public class PutRequestTest extends Utility {
             .when()
             .put("https://stage-api-engage.3pillarglobal.com/api/technologies/" + id)
             .then().statusCode(400);
-        delete(id);
     }
 
     //    Scenario2 : Pass the data in the body without “tech_type_id”
     @Test
     void putWithoutTechType() {
-        response = post();
         PostPOJO data = new PostPOJO();
         String[] assocTag = {"Framework", "Aurelia", "JSFramework"};
 
@@ -43,9 +48,8 @@ public class PutRequestTest extends Utility {
         data.setDescription("Angular like framework");
         data.setLogo(6);
         data.setDoc_link("aurelia.com");
-        data.setTech_type_id(3);
 
-        int id = response.jsonPath().get("id");
+        id = response.jsonPath().get("id");
         given()
             .contentType("application/json")
             .headers("Authorization", "Bearer " + bearerToken)
@@ -53,13 +57,11 @@ public class PutRequestTest extends Utility {
             .when()
             .put("https://stage-api-engage.3pillarglobal.com/api/technologies/" + id)
             .then().statusCode(400);
-        delete(id);
     }
 
     //    Scenario3 : Pass the Existing data (duplicate data) into the body
     @Test
     void putWithDuplicateValue() {
-        response = post();
         PostPOJO data = new PostPOJO();
         String[] assocTag = {"Framework", "Aurelia", "JSFramework"};
 
@@ -70,7 +72,7 @@ public class PutRequestTest extends Utility {
         data.setDoc_link("aurelia.com");
         data.setTech_type_id(3);
 
-        int id = response.jsonPath().get("id");
+        id = response.jsonPath().get("id");
         response = given()
             .contentType("application/json")
             .headers("Authorization", "Bearer " + bearerToken)
@@ -78,15 +80,36 @@ public class PutRequestTest extends Utility {
             .when()
             .put("https://stage-api-engage.3pillarglobal.com/api/technologies/" + id)
             .then().extract().response();
-        Assert.assertEquals(response.statusCode(), 400);
-        delete(id);
+        Assert.assertEquals(response.statusCode(), 409);
     }
 
     //    Scenario4 : Update Name, and Description from existing data in the body
-    @Test(dependsOnMethods = "postTestSuccessful")
+    @Test
     void putRequestToUpdateData() {
-        Response response = post();
-        int id = response.jsonPath().get("id");
+        id = response.jsonPath().get("id");
+        updateData(id);
+        Assert.assertEquals(response.statusCode(), 200);
+    }
+
+    //    Scenario5 : After updating the data
+    @Test
+    void verificationOfUpdatedData() {
+        id = response.jsonPath().get("id");
+        updateData(id);
+        response = get(id);
+        Assert.assertEquals(response.jsonPath().get("name"), "Aurelia");
+        Assert.assertEquals(response.jsonPath().get("tech_description"), "Angular or Vue like framework");
+        var techTypeLogo = response.jsonPath().get("tech_logo");
+        Assert.assertEquals(techTypeLogo.toString(), "6");
+        var techTypeId = response.jsonPath().get("tech_type_id");
+        Assert.assertEquals(techTypeId.toString(), "3");
+        Assert.assertEquals(response.jsonPath().get("associated_tags[0]"), "Framework");
+        Assert.assertEquals(response.jsonPath().get("associated_tags[1]"), "Aurelia");
+        Assert.assertEquals(response.jsonPath().get("associated_tags[2]"), "JSFramework");
+        Assert.assertEquals(response.jsonPath().get("documentation_link"), "aurelia.com");
+    }
+
+    private void updateData(int id) {
         PostPOJO data = new PostPOJO();
         String[] assocTag = {"Framework", "Aurelia", "JSFramework"};
 
@@ -105,20 +128,10 @@ public class PutRequestTest extends Utility {
             .put("https://stage-api-engage.3pillarglobal.com/api/technologies/" + id)
             .then()
             .extract().response();
-
-        Assert.assertEquals(response.statusCode(), 200);
-        delete(id);
     }
 
-    //    Scenario5 : After updating the data
-    @Test(dependsOnMethods = "putRequestToUpdateData")
-    void verificationOfUpdatedData() {
-        Assert.assertEquals(response.jsonPath().get("name"), "Aurelia");
-        Assert.assertEquals(response.jsonPath().get("description"), "Angular or Vue like framework");
-        Assert.assertEquals(response.jsonPath().get("logo"), "6");
-        Assert.assertEquals(response.jsonPath().get("tech_type_id"), "3");
-        Assert.assertEquals(response.jsonPath().get("assoc_tags[0]"), "Framework");
-        Assert.assertEquals(response.jsonPath().get("assoc_tags[1]"), "Aurelia");
-        Assert.assertEquals(response.jsonPath().get("assoc_tags[2]"), "JSFramework");
+    @AfterMethod(alwaysRun = true)
+    public void teardown() {
+        delete(id);
     }
 }
