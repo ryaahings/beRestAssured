@@ -8,6 +8,11 @@ import java.util.HashMap;
 import static io.restassured.RestAssured.given;
 
 public class SampleApiTest {
+
+
+//    ---------> PRACTICE WORK <-----------
+
+
     int id;
     private String bearerToken = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJleHAiOiIyMDIzLTAxLTI3VDE2OjQzOjM2Ljk3OVoiLCJ1c2VybmFtZSI6ImFyeWEuc2luZ2hAM3BpbGxhcmdsb2JhbC5jb20ifQ.dSPoqphVD7MWv1p0GpOIDzHsd2QLRbYMUrnML7YUYwVUa_n1Z0o-5IVAre-1VKBgKA1yN3eKaNbxF7yHQfSFdA";
     @Test
@@ -17,7 +22,7 @@ public class SampleApiTest {
         System.out.println("Response Body : "+ res.getBody());
 
         int statCode = res.getStatusCode();
-        Assert.assertEquals(200, statCode, "Verify the status code is 200");
+        Assert.assertEquals(statCode, 200, "Verify the status code is 200");
 
         given();
     }
