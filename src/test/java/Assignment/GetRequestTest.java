@@ -25,13 +25,13 @@ public class GetRequestTest extends Utility {
         int id =  response.jsonPath().get("id");
         response = get(id);
         Assert.assertTrue(StringUtils.isNotEmpty( response.jsonPath().get("name")));
-        Assert.assertTrue(StringUtils.isNotEmpty( response.jsonPath().get("tech_type_id")));
-        Assert.assertTrue(StringUtils.isNotEmpty( response.jsonPath().get("doc_link")));
-        Assert.assertTrue(StringUtils.isNotEmpty( response.jsonPath().get("description")));
-        Assert.assertTrue(StringUtils.isNotEmpty( response.jsonPath().get("assoc_tags[0]")));
-        Assert.assertTrue(StringUtils.isNotEmpty( response.jsonPath().get("assoc_tags[1]")));
-        Assert.assertTrue(StringUtils.isNotEmpty( response.jsonPath().get("assoc_tags[2]")));
-        Assert.assertTrue(StringUtils.isNotEmpty( response.jsonPath().get("logo")));
+        Assert.assertTrue(StringUtils.isNotEmpty(response.jsonPath().get("tech_type_id").toString()));
+        Assert.assertTrue(StringUtils.isNotEmpty( response.jsonPath().get("documentation_link")));
+        Assert.assertTrue(StringUtils.isNotEmpty( response.jsonPath().get("tech_description")));
+        Assert.assertTrue(StringUtils.isNotEmpty( response.jsonPath().get("associated_tags[0]")));
+        Assert.assertTrue(StringUtils.isNotEmpty( response.jsonPath().get("associated_tags[1]")));
+        Assert.assertTrue(StringUtils.isNotEmpty( response.jsonPath().get("associated_tags[2]")));
+        Assert.assertTrue(StringUtils.isNotEmpty( response.jsonPath().get("tech_logo").toString()));
         delete(id);
     }
 }

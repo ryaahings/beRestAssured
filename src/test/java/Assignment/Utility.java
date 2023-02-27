@@ -6,9 +6,7 @@ import io.restassured.response.Response;
 import static io.restassured.RestAssured.given;
 
 public class Utility {
-    String bearerToken = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9." +
-        "eyJleHAiOiIyMDIzLTAyLTE1VDEzOjQzOjUzLjg2MVoiLCJ1c2VybmFtZSI6ImFyeWEuc2luZ2hAM3BpbGxhcmdsb2JhbC5jb20ifQ." +
-        "clieI2UORtfDRXfYJrWGpsFeNjYDdq5icRbiMirO3mkpfFFkNF7P2d7UDfmhUDx0OyYr_MoIsKzpCyYtj8NJDA";
+    String bearerToken = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJleHAiOiIyMDIzLTAyLTI3VDEzOjAzOjEzLjI1OFoiLCJ1c2VybmFtZSI6ImFyeWEuc2luZ2hAM3BpbGxhcmdsb2JhbC5jb20ifQ._d4X8UHs3wRDOnDwccdBv8z62T9-b7SBY5P0R7CbYPefi33daqSdQqqM_AISfaAFn29r9OAKKy-RxyXX2p4FEA";
     Response response;
     PostPOJO data = new PostPOJO();
 
@@ -21,6 +19,14 @@ public class Utility {
         return response;
     }
 
+    Response get() {
+        response = given()
+            .headers("Authorization", "Bearer " + bearerToken)
+            .when()
+            .get("https://stage-api-engage.3pillarglobal.com/api/technologies/")
+            .then().extract().response();
+        return response;
+    }
     void delete(int id) {
         given()
             .headers("Authorization", "Bearer " + bearerToken)
