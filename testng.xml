@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite name="Regression and smoke test suite">
+    <test thread-count="5" name="SmokeTest">
+        <classes>
+            <class name="Assignment.GetRequestTest"></class>
+        </classes>
+    </test>
+    <test thread-count="5" name="RegressionTest">
+        <classes>
+            <class name="Assignment.PostRequestTest"></class>
+            <class name="Assignment.DeleteRequestTest"></class>
+            <class name="Assignment.PutRequestTest"></class>
+        </classes>
+    </test>
+</suite>
