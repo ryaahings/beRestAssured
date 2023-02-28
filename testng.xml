@@ -3,14 +3,14 @@
 <suite name="Regression and smoke test suite">
     <test thread-count="5" name="SmokeTest">
         <classes>
-            <class name="Assignment.GetRequestTest"></class>
+            <class name="Assignment.GetRequestTest"/>
         </classes>
     </test>
     <test thread-count="5" name="RegressionTest">
         <classes>
-            <class name="Assignment.PostRequestTest"></class>
-            <class name="Assignment.DeleteRequestTest"></class>
-            <class name="Assignment.PutRequestTest"></class>
+            <class name="Assignment.PostRequestTest"/>
+            <class name="Assignment.DeleteRequestTest"/>
+            <class name="Assignment.PutRequestTest"/>
         </classes>
     </test>
 </suite>
