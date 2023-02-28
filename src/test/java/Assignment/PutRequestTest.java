@@ -33,7 +33,7 @@ public class PutRequestTest extends Utility {
             .headers("Authorization", "Bearer " + bearerToken)
             .body(data)
             .when()
-            .put("https://stage-api-engage.3pillarglobal.com/api/technologies/" + id)
+            .put("<url>" + id)
             .then().statusCode(400);
     }
 
@@ -55,7 +55,7 @@ public class PutRequestTest extends Utility {
             .headers("Authorization", "Bearer " + bearerToken)
             .body(data)
             .when()
-            .put("https://stage-api-engage.3pillarglobal.com/api/technologies/" + id)
+            .put("<url>" + id)
             .then().statusCode(400);
     }
 
@@ -78,7 +78,7 @@ public class PutRequestTest extends Utility {
             .headers("Authorization", "Bearer " + bearerToken)
             .body(data)
             .when()
-            .put("https://stage-api-engage.3pillarglobal.com/api/technologies/" + id)
+            .put("<url>" + id)
             .then().extract().response();
         Assert.assertEquals(response.statusCode(), 409);
     }
@@ -125,7 +125,7 @@ public class PutRequestTest extends Utility {
             .headers("Authorization", "Bearer " + bearerToken)
             .body(data)
             .when()
-            .put("https://stage-api-engage.3pillarglobal.com/api/technologies/" + id)
+            .put("<url>" + id)
             .then()
             .extract().response();
     }

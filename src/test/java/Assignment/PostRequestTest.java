@@ -23,7 +23,7 @@ public class PostRequestTest extends Utility {
             .headers("Authorization", "Bearer " + bearerToken)
             .body(data)
             .when()
-            .post("https://stage-api-engage.3pillarglobal.com/api/technologies")
+            .post("<url>")
             .then().statusCode(400);
     }
 
@@ -43,7 +43,7 @@ public class PostRequestTest extends Utility {
             .headers("Authorization", "Bearer " + bearerToken)
             .body(data)
             .when()
-            .post("https://stage-api-engage.3pillarglobal.com/api/technologies")
+            .post("<url>")
             .then().statusCode(400);
     }
 

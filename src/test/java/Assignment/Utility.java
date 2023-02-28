@@ -6,7 +6,7 @@ import io.restassured.response.Response;
 import static io.restassured.RestAssured.given;
 
 public class Utility {
-    String bearerToken = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJleHAiOiIyMDIzLTAyLTI3VDEzOjAzOjEzLjI1OFoiLCJ1c2VybmFtZSI6ImFyeWEuc2luZ2hAM3BpbGxhcmdsb2JhbC5jb20ifQ._d4X8UHs3wRDOnDwccdBv8z62T9-b7SBY5P0R7CbYPefi33daqSdQqqM_AISfaAFn29r9OAKKy-RxyXX2p4FEA";
+    String bearerToken;
     Response response;
     PostPOJO data = new PostPOJO();
 
@@ -14,7 +14,7 @@ public class Utility {
         response = given()
             .headers("Authorization", "Bearer " + bearerToken)
             .when()
-            .get("https://stage-api-engage.3pillarglobal.com/api/technologies/" + id)
+            .get("<url>" + id)
             .then().extract().response();
         return response;
     }
@@ -23,7 +23,7 @@ public class Utility {
         response = given()
             .headers("Authorization", "Bearer " + bearerToken)
             .when()
-            .get("https://stage-api-engage.3pillarglobal.com/api/technologies/")
+            .get("<url>")
             .then().extract().response();
         return response;
     }
@@ -31,7 +31,7 @@ public class Utility {
         given()
             .headers("Authorization", "Bearer " + bearerToken)
             .when()
-            .delete("https://stage-api-engage.3pillarglobal.com/api/technologies/" + id)
+            .delete("<url>" + id)
             .then().statusCode(200);
     }
 
@@ -50,7 +50,7 @@ public class Utility {
             .headers("Authorization", "Bearer "+ bearerToken)
             .body(data)
             .when()
-            .post("https://stage-api-engage.3pillarglobal.com/api/technologies/")
+            .post("<url>")
             .then().contentType(ContentType.JSON).
             extract().response();
         return response;
