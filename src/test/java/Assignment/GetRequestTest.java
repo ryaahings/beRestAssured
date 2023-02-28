@@ -14,7 +14,7 @@ public class GetRequestTest extends Utility {
         given()
             .headers("Authorization", "Bearer "+ bearerToken)
             .when()
-            .get("https://stage-api-engage.3pillarglobal.com/api/technologies")
+            .get("<url>")
             .then().log().all();
     }
 
